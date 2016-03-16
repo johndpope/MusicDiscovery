@@ -24,7 +24,7 @@ class CameraViewController: PARViewController, PARControllerDelegate
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -123,7 +123,7 @@ class CameraViewController: PARViewController, PARControllerDelegate
     *********************************************************************************************************/
     func arDidTapObject(object: PARObjectDelegate!)
     {
-        println("Tapped on item")
+        print("Tapped on item")
     }
     
     
@@ -137,8 +137,8 @@ class CameraViewController: PARViewController, PARControllerDelegate
             //create the poi label at the users location
             let poiLabel = PoiSongLabel(title: "", theDescription: "", theImage: UIImage(named: "Icon@2x~ipad"), fromTemplateXib: "PoiLabelWithImage", atLocation: user.getLocation())
             // check for real name
-            println("CREATE POI")
-            println("REAL NAME = \(user.getRealName())")
+            print("CREATE POI")
+            print("REAL NAME = \(user.getRealName())")
             
             if user.getRealName() != ""
             {
@@ -151,32 +151,32 @@ class CameraViewController: PARViewController, PARControllerDelegate
             // get profile pic if it exists
             if user.getImageURL() != nil
             {
-                Alamofire.request(.GET, user.getImageURL()!, parameters: nil).responseImage { (_, _, image, error) -> Void in
-                    if error == nil
-                    {
-                        poiLabel.poiTemplate?.profilePic.image = image
-                    }
-                }
+//                Alamofire.request(.GET, user.getImageURL()!, parameters: nil).responseImage { (_, _, image, error) -> Void in
+//                    if error == nil
+//                    {
+//                        poiLabel.poiTemplate?.profilePic.image = image
+//                    }
+//                }
             }
             // get album cover image
             if user.getCurrentSong() != nil
             {
-                println("SONG IS NOT NIL")
-                println("SONG NAME = \(user.getSongName())")
+                print("SONG IS NOT NIL")
+                print("SONG NAME = \(user.getSongName())")
                 // place song information on the label
                 poiLabel.poiTemplate?.songLabel.text = user.getSongName()
                 poiLabel.poiTemplate?.artistLabel.text = user.getArtistName()
                 poiLabel.poiTemplate?.songURI = user.getCurrentSong()
-                SpotifyCommunication().getSongInfo(user.getCurrentSong()!)
-                {
-                    (album: SPTPartialAlbum) in
-                    Alamofire.request(.GET, album.largestCover.imageURL, parameters: nil).responseImage { (_, _, image, error) -> Void in
-                        if error == nil
-                        {
-                            poiLabel.poiTemplate?.image.image = image
-                        }
-                    }
-                }
+//                SpotifyCommunication().getSongInfo(user.getCurrentSong()!)
+//                {
+//                    (album: SPTPartialAlbum) in
+//                    Alamofire.request(.GET, album.largestCover.imageURL, parameters: nil).responseImage { (_, _, image, error) -> Void in
+//                        if error == nil
+//                        {
+//                            poiLabel.poiTemplate?.image.image = image
+//                        }
+//                    }
+//                }
             }
 
             PARController.sharedARController().addObject(poiLabel)

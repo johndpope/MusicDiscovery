@@ -61,7 +61,7 @@ class AudioPlayer: NSObject, SPTAudioStreamingPlaybackDelegate
             self.player?.playURIs([request], fromIndex: 0, callback: { (error) -> Void in
                 if error != nil
                 {
-                    println("Playback error \(error)")
+                    print("Playback error \(error)")
 
                 }
             })
@@ -80,7 +80,7 @@ class AudioPlayer: NSObject, SPTAudioStreamingPlaybackDelegate
             let track = trackMetadata["SPTAudioStreamingMetadataTrackName"] as! String
             let trackURI = trackMetadata["SPTAudioStreamingMetadataTrackURI"] as! String
             let album = trackMetadata["SPTAudioStreamingMetadataAlbumName"] as! String
-            println("changed track to \(trackMetadata)")
+            print("changed track to \(trackMetadata)")
             
             // Update the users current song and location in the database
             BluemixCommunication().updateCurrentSong(user!.getUserID(), track: track, album: album, artist: artist, URI: trackURI)
@@ -93,7 +93,7 @@ class AudioPlayer: NSObject, SPTAudioStreamingPlaybackDelegate
     *********************************************************************************************************/
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: NSURL!)
     {
-        println("started playing \(trackUri)")
+        print("started playing \(trackUri)")
     }
     
 

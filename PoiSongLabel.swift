@@ -21,7 +21,7 @@ class PoiSongLabel: PARPoiLabel
     
         override func awakeFromNib()
         {
-            println("awake")
+            print("awake")
             poiTemplate = NSBundle.mainBundle().loadNibNamed("PoiLabelSong", owner: self, options: nil).first as? PoiSongLabelTemplate
             super.labelView = poiTemplate
         }

@@ -52,10 +52,10 @@ class MapCalculator {
         var pointArr2D = [CLLocationCoordinate2D]()
         pointArr2D.append(loc2D)
         
-        var totalPoints = Double(numPoints)
+        let totalPoints = Double(numPoints)
         
         for pointNum in 0...numPoints {
-            var angleNum = Double(pointNum)
+            let angleNum = Double(pointNum)
             var pointBearing = bearing - sweepAngle/2 * toRadians
             
 //            println(bearing)
@@ -66,8 +66,8 @@ class MapCalculator {
             
             pointBearing = pointBearing + angleNum * (sweepAngle/totalPoints) * toRadians
 //            println(pointBearing)
-            var endLat = asin( sin(startLat)*cos((distance/earthRad)) +  cos(startLat)*sin(distance/earthRad)*cos(pointBearing) )
-            var endLong = startLong + atan2(sin(pointBearing)*sin(distance/earthRad)*cos(startLat)
+            let endLat = asin( sin(startLat)*cos((distance/earthRad)) +  cos(startLat)*sin(distance/earthRad)*cos(pointBearing) )
+            let endLong = startLong + atan2(sin(pointBearing)*sin(distance/earthRad)*cos(startLat)
                 , cos(distance/earthRad)-sin(startLat)*sin(endLat) )
             
 //            println("COMPUTED FORWARD POINT")

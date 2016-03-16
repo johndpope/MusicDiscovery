@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GoogleMaps
 
 private let _mapHandlerSharedInstance = MapHandler()
 

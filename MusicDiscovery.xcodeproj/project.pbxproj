@@ -43,9 +43,6 @@
 		A23B70D21AD66FFF00833A6B /* NormalMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A23B70D11AD66FFF00833A6B /* NormalMapView.xib */; };
 		A23B70D41AD6784600833A6B /* MapHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23B70D31AD6784600833A6B /* MapHandler.swift */; };
 		A2BD7BEB1AD365400066A4A3 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BD7BEA1AD365400066A4A3 /* LocationHandler.swift */; };
-		A2E7BDEC1AD451E20087094C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E7BDEB1AD451E20087094C /* GoogleMaps.framework */; };
-		A2E7BDEF1AD4520A0087094C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A2E7BDEE1AD4520A0087094C /* GoogleMaps.bundle */; };
-		A2E7BDF01AD4520A0087094C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A2E7BDEE1AD4520A0087094C /* GoogleMaps.bundle */; };
 		A2E7BDFD1AD452A80087094C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E7BDF11AD452A80087094C /* AVFoundation.framework */; };
 		A2E7BDFE1AD452A80087094C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E7BDF21AD452A80087094C /* CoreData.framework */; };
 		A2E7BDFF1AD452A80087094C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E7BDF31AD452A80087094C /* CoreLocation.framework */; };
@@ -60,7 +57,7 @@
 		A2E7BE081AD452A80087094C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E7BDFC1AD452A80087094C /* SystemConfiguration.framework */; };
 		A2E7BE101AD458570087094C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E7BE0F1AD458570087094C /* MapViewController.swift */; };
 		A2E7BE361AD4F0D50087094C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E7BE351AD4F0D50087094C /* SettingsViewController.swift */; };
-		CCC2525A04EF16443698DC13 /* Pods_MusicDiscovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB2A34F5A84520BB9AAE289 /* Pods_MusicDiscovery.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CCC2525A04EF16443698DC13 /* Pods_MusicDiscovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB2A34F5A84520BB9AAE289 /* Pods_MusicDiscovery.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,8 +125,6 @@
 		A23B70D11AD66FFF00833A6B /* NormalMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NormalMapView.xib; sourceTree = "<group>"; };
 		A23B70D31AD6784600833A6B /* MapHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapHandler.swift; sourceTree = "<group>"; };
 		A2BD7BEA1AD365400066A4A3 /* LocationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
-		A2E7BDEB1AD451E20087094C /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		A2E7BDEE1AD4520A0087094C /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		A2E7BDF11AD452A80087094C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A2E7BDF21AD452A80087094C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A2E7BDF31AD452A80087094C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -169,7 +164,6 @@
 				A2E7BE061AD452A80087094C /* OpenGLES.framework in Frameworks */,
 				A2E7BE071AD452A80087094C /* QuartzCore.framework in Frameworks */,
 				A2E7BE081AD452A80087094C /* SystemConfiguration.framework in Frameworks */,
-				A2E7BDEC1AD451E20087094C /* GoogleMaps.framework in Frameworks */,
 				2B1F0EF31ACDA65D00BBCBCA /* Spotify.framework in Frameworks */,
 				CCC2525A04EF16443698DC13 /* Pods_MusicDiscovery.framework in Frameworks */,
 			);
@@ -362,8 +356,6 @@
 				A2E7BDFA1AD452A80087094C /* OpenGLES.framework */,
 				A2E7BDFB1AD452A80087094C /* QuartzCore.framework */,
 				A2E7BDFC1AD452A80087094C /* SystemConfiguration.framework */,
-				A2E7BDEE1AD4520A0087094C /* GoogleMaps.bundle */,
-				A2E7BDEB1AD451E20087094C /* GoogleMaps.framework */,
 			);
 			name = "Google Maps";
 			sourceTree = "<group>";
@@ -429,12 +421,14 @@
 		2B1F0EC51ACDA5FC00BBCBCA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Nick Martinson";
 				TargetAttributes = {
 					2B1F0ECC1ACDA5FC00BBCBCA = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = VFFSBUB24B;
+						DevelopmentTeam = WMDZ2CQA8K;
 					};
 					2B1F0EE11ACDA5FC00BBCBCA = {
 						CreatedOnToolsVersion = 6.2;
@@ -477,7 +471,6 @@
 				A23B70D21AD66FFF00833A6B /* NormalMapView.xib in Resources */,
 				A23B70D01AD66FE000833A6B /* SatteliteMapView.xib in Resources */,
 				2B1F0EDA1ACDA5FC00BBCBCA /* Images.xcassets in Resources */,
-				A2E7BDEF1AD4520A0087094C /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +478,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2E7BDF01AD4520A0087094C /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +618,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -692,6 +685,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -700,7 +694,12 @@
 				INFOPLIST_FILE = MusicDiscovery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BAApps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MusicDiscovery/Music-Discovery-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -715,6 +714,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -723,7 +723,11 @@
 				INFOPLIST_FILE = MusicDiscovery/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BAApps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MusicDiscovery/Music-Discovery-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -744,6 +748,7 @@
 				);
 				INFOPLIST_FILE = MusicDiscoveryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BAApps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusicDiscovery.app/MusicDiscovery";
 			};
@@ -759,6 +764,7 @@
 				);
 				INFOPLIST_FILE = MusicDiscoveryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BAApps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusicDiscovery.app/MusicDiscovery";
 			};

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 
 @UIApplicationMain
@@ -65,8 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LocationAlertProtocol {
     *     > The alert controller is then pushed to the currently visible view controller                <<<
     *******************************************************************************************************/
     func getAndPushAlert (locAlertController: UIAlertController) -> Void /*Boolean*/ {
-        var rootVC = self.window?.rootViewController as UIViewController!
-        var visibleVC = getVisibleViewController(rootVC)
+        let rootVC = self.window?.rootViewController as UIViewController!
+        let visibleVC = getVisibleViewController(rootVC)
         visibleVC.presentViewController(locAlertController, animated: true, completion: nil)
     }
     
@@ -87,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LocationAlertProtocol {
         var visibleVC: UIViewController!
         
         if ( rootVC.isKindOfClass(UINavigationController) ) {
-            return ( getVisibleViewController( (rootVC as! UINavigationController).visibleViewController ) )
+            return ( getVisibleViewController( (rootVC as! UINavigationController).visibleViewController! ) )
         } else if ( rootVC.isKindOfClass(UITabBarController) ) {
             return ( getVisibleViewController( (rootVC as! UITabBarController).presentedViewController! ) )
         } else {
@@ -100,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LocationAlertProtocol {
         }
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
         return false
     }

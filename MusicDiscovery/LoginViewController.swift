@@ -57,7 +57,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
                     
                     if user == nil
                     {
-                        println("CREATING USER")
+                        print("CREATING USER")
                         // if user doesn't exist, create an account
                         BluemixCommunication().createNewUser(newUser.getUserID(), name: newUser.getRealName(), lat: lat, lon: lon, profilePicture: newUser.getImageURL()!)
                         {
@@ -70,14 +70,14 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
                     else
                     {
                         // UPDATE USER LOCATION
-                        println("USER EXISTS")
+                        print("USER EXISTS")
 //                        println("LOGIN REAL NAME \(loggedUser.displayName)")
                         BluemixCommunication().updateLocation(newUser.getUserID(), lat: lat, lon: lon)
                         self.locHandler.userID = newUser.getUserID()
                     }
                 }
             } else {
-                println("Error SPTRequest.userInformationForUserInSession: \(error)")
+                print("Error SPTRequest.userInformationForUserInSession: \(error)")
             }
         })
 
@@ -113,7 +113,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
         if loggedUser.canonicalUserName != nil
         {
             userID = loggedUser.canonicalUserName
-            println(userID)
+            print(userID)
         }
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -139,7 +139,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
             {
                 // Renew the session
                 SPTAuth.defaultInstance().renewSession(auth.session, callback: { (error, newSession) -> Void in
-                    if error != nil { println("Renew session error") }
+                    if error != nil { print("Renew session error") }
                     else
                     {
                         // store the refreshed session in user defaults
@@ -160,6 +160,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
                         let newUser = self.getAndStoreUserInfo(user as! SPTUser)
 
                         // UPDATE CURRENT LOCATION
+                        
                         BluemixCommunication().updateLocation(newUser.getUserID(), lat: LocationHandler.sharedInstance.latitude, lon: LocationHandler.sharedInstance.longitude)
                         self.locHandler.userID = newUser.getUserID()
                     }
@@ -198,7 +199,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
     *********************************************************************************************************/
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!)
     {
-        println("Log in failed")
+        print("Log in failed")
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!)
@@ -217,7 +218,7 @@ class LoginViewController: UIViewController, SPTAuthViewDelegate, LoginLocationN
     
     func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!)
     {
-        println("Log In Canceled")
+        print("Log In Canceled")
     }
     
     

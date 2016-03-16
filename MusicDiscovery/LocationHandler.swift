@@ -13,7 +13,7 @@ import UIKit
 private let _LocationHandlerSharedInstance = LocationHandler()
 
 protocol LocationAlertProtocol{
-    func getAndPushAlert (UIAlertController) -> Void
+    func getAndPushAlert (_: UIAlertController) -> Void
 }
 
 protocol MapUpdateProtocol{
@@ -85,7 +85,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
     func compassInit() -> Void {
         if CLLocationManager.headingAvailable() == false {
             //need alertController for this
-            println("This device does not have the ability to measure magnetic fields.")
+            print("This device does not have the ability to measure magnetic fields.")
         } else {
             locationManager.headingFilter = 2 //The default value of this property is 1 degree
             //            locationManager.headingOrientation = ? // https://developer.apple.com/library/prerelease/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html#//apple_ref/occ/instp/CLLocationManager/headingOrientation
@@ -93,7 +93,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
         }
     }
     
-    func locationManagerShouldDisplayHeadingCalibration(manager: CLLocationManager!) -> Bool {
+    func locationManagerShouldDisplayHeadingCalibration(manager: CLLocationManager) -> Bool {
         return true
     }
 
@@ -109,8 +109,8 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
     *   >>> This function is called when the CLHeading is updated, meaning magnetnic direction has
     *     > likely changed. <<<
     **********************************************************************************************/
-    func locationManager(manager: CLLocationManager!,
-        didUpdateHeading newHeading: CLHeading!) {
+    func locationManager(manager: CLLocationManager,
+        didUpdateHeading newHeading: CLHeading) {
         
         self.bearing = newHeading
     
@@ -131,13 +131,13 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
     * This function is called when CLLocationManager updates current location in the background.
     * TODO: Handle new coordinate data here.
     **********************************************************************************************/
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
-        println("locations = \(locations)")
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("locations = \(locations)")
 
         
-        var locationArray = locations as NSArray
-        var locationObj = locationArray.lastObject as! CLLocation
-        var coord = locationObj.coordinate
+        let locationArray = locations as NSArray
+        let locationObj = locationArray.lastObject as! CLLocation
+        let coord = locationObj.coordinate
 //        self.bearing = locationObj.course as CLLocationDirection
 //        println(coord.latitude)
 //        println(coord.longitude)
@@ -169,7 +169,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
             }
         }
         if self.userID != nil {
-            println("Location handler updating backend")
+            print("Location handler updating backend")
             BluemixCommunication().updateLocation(self.userID, lat: self.latitude, lon: self.longitude)
         }
     }
@@ -179,29 +179,29 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
     * Author: Dillon McCusker
     * This function is called when authorization status changes in CLLocationManager.
     **********************************************************************************************/
-    func locationManager(manager: CLLocationManager!,
+    func locationManager(manager: CLLocationManager,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
         switch status {
         case .NotDetermined:
             locationManager.requestAlwaysAuthorization()
 //            locationManager.requestWhenInUseAuthorization()
-            println("authorizationSatus is .NotDetermined at initLocationManager()")
+            print("authorizationSatus is .NotDetermined at initLocationManager()")
         case .Restricted:
-            println("authorizationSatus is .Restricted at initLocationManager()")
+            print("authorizationSatus is .Restricted at initLocationManager()")
         case .Denied:
-            println("authorizationSatus is .Denied at initLocationManager()")
+            print("authorizationSatus is .Denied at initLocationManager()")
             ////Use function in protocol to push the alert about location settings
             var locServicesAlertController: UIAlertController = buildTurnOnLocationAlertController()
             locationAlertDelegate.getAndPushAlert(locServicesAlertController)
         case .AuthorizedAlways:
-            println("authorizationSatus is .AuthorizedAlways at initLocationManager()")
+            print("authorizationSatus is .AuthorizedAlways at initLocationManager()")
         case .AuthorizedWhenInUse:
-          println("authorizationSatus is .AuthorizedWhenInUse at initLocationManager()")
+          print("authorizationSatus is .AuthorizedWhenInUse at initLocationManager()")
 //            var locServicesAlertController: UIAlertController = buildAuthAlwaysAlertController()
 //            locationHandlerDelegate.getAndPushAlert(locServicesAlertController)
         default:
-            println("did not find a matching auth in switch statement")
+            print("did not find a matching auth in switch statement")
         }
         
 
@@ -221,14 +221,14 @@ class LocationHandler: NSObject, CLLocationManagerDelegate{
     * fail with error.
     * Function stops location updates and prints an error, one time.
     **********************************************************************************************/
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
 //        locationManager.stopUpdatingLocation()
-        if ((error) != nil) {
-            if (seenError == false) {
-                seenError = true
-                print(error)
-            }
-        }
+//        if ((error) != nil) {
+//            if (seenError == false) {
+//                seenError = true
+//                print(error, terminator: "")
+//            }
+//        }
     }
 
     /*********************************************************************************************

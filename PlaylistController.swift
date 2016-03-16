@@ -42,7 +42,7 @@ class PlayListController:UIViewController, UITableViewDataSource, UITableViewDel
         SPTRequest.playlistsForUserInSession(session, callback: { (error, playlists) -> Void in
             if error != nil
             {
-                println("Playlist request error")
+                print("Playlist request error")
             }
             else
             {
@@ -87,7 +87,7 @@ class PlayListController:UIViewController, UITableViewDataSource, UITableViewDel
     ******************************************************************************************************/
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("playlistCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("playlistCell")! as UITableViewCell
         cell.textLabel?.text = playlists.items[indexPath.row].name
         cell.textLabel?.textColor = UIColor.whiteColor()
         return cell

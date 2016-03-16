@@ -21,13 +21,23 @@ class SpotifyWebAPI
         mutableRequest.setValue("Accept", forHTTPHeaderField: "application/json")
         let request = Alamofire.request(mutableRequest)
         
-        request.responseJSON{(_,response, rawJSON, error) in
-            if error == nil
-            {
-                let json = JSON(rawJSON!)
-                let userID = json["id"].stringValue
+        request.responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+               // let json = JSON(response)
+                let userID = JSON["id"]
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
             }
         }
+        
+
     }
     
     func getMyPlaylists(session:SPTSession, userID: String)
@@ -39,18 +49,28 @@ class SpotifyWebAPI
         mutableRequest.setValue("Accept", forHTTPHeaderField: "application/json")
         let request = Alamofire.request(mutableRequest)
         
-        request.responseJSON{(_,response, rawJSON, error) in
-            if error == nil
-            {
-                let json = JSON(rawJSON!)
-
-                let count = json["total"].intValue
-                for(var i = 0; i < count; i++)
-                {
-                    println(json["items"][i]["name"].stringValue)
+        request.responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+//                let json = JSON as! Dictionary
+//                
+//                let count = json["total"].intValue
+//                for(var i = 0; i < count; i++)
+//                {
+//                    println(json["items"][i]["name"].stringValue)
+//                }
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
         }
+        
+
     }
     
     

@@ -21,6 +21,6 @@ class GMSInfoWindowTemplate: UIView {
     
     @IBAction func playButtonTapped(sender: UIButton) {
         //play song
-        println("Tapped Play Button!!!")
+        print("Tapped Play Button!!!")
     }
 }

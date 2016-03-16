@@ -12,25 +12,27 @@ import Alamofire
 /******************************************************************************************
 *
 ******************************************************************************************/
-extension Alamofire.Request
-{
-    class func imageResponseSerializer() -> Serializer{
-        return { request, response, data in
-            if( data == nil) {
-                return (nil,nil)
+/*extension Alamofire.Request {
+    public static func imageResponseSerializer() -> ResponseSerializer<UIImage, NSError> {
+        return ResponseSerializer { request, response, data, error in
+            guard error == nil else { return .Failure(error!) }
+            guard let validData = data else {
+                let failureReason = "Image parsing failed."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure(error)
             }
-            let image = UIImage(data: data!, scale: UIScreen.mainScreen().scale)
-            
-            return (image, nil)
+            guard let image = UIImage(data: validData, scale: UIScreen.mainScreen().scale) else {
+                let failureReason = "Image format failed."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure( error)
+            }
+            return .Success(image)
         }
     }
-    
-    func responseImage(completionHandler: (NSURLRequest, NSHTTPURLResponse?, UIImage?, NSError?) -> Void) -> Self{
-        return response(serializer: Request.imageResponseSerializer(), completionHandler: { (request, response, image, error) in
-            completionHandler(request, response, image as? UIImage, error)
-        })
+    public func responseImage(completionHandler: Response<UIImage, NSError> -> Void) -> Self {
+        return response(responseSerializer: Request.imageResponseSerializer(), completionHandler: completionHandler)
     }
-}
+}*/
 
 class BluemixCommunication
 {
@@ -59,7 +61,7 @@ class BluemixCommunication
     ******************************************************************************************/
     func updateLocation(userId: String, lat:String, lon:String)
     {
-        var details:Dictionary<String,AnyObject>?
+     //   var details:Dictionary<String,AnyObject>?
         var params:[String:String]
         if lat == "" && lon == ""
         {
@@ -69,17 +71,17 @@ class BluemixCommunication
         {
             params = ["action": updateLocationAction, "userId":userId, "lat":lat, "lon":lon]
         }
-        println("UPDATE LOCATION \(params)")
-        Alamofire.request(.POST, userURL, parameters: params).responseString { (_, response, string, _) -> Void in
-            if string! == self.updateLocationFailure
-            {
-                println("Update location failure")
-            }
-            else
-            {
-                println("Update location success")
-            }
-        }
+        print("UPDATE LOCATION \(params)")
+//        Alamofire.request(.POST, userURL, parameters: params).responseString { (_, response, string, _) -> Void in
+//            if string! == self.updateLocationFailure
+//            {
+//                println("Update location failure")
+//            }
+//            else
+//            {
+//                println("Update location success")
+//            }
+//        }
     }
 
     
@@ -90,9 +92,25 @@ class BluemixCommunication
     {
         let radius = UserPreferences().getRadius()
         let params:[String : AnyObject] = ["action": getNearbyUsersAction, "userId": userId, "radius": radius]
+        print("bailing out of getNearbyUsers")
         
-        Alamofire.request(.GET, userURL, parameters: params).responseJSON { (_, response, rawJSON, _) -> Void in
-            println("NEARBY USERS\n\(rawJSON)")
+      
+        Alamofire.request(.GET, userURL, parameters: params).responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                // let json = JSON(response)
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+        }
+     
+            /*print("NEARBY USERS\n\(rawJSON)")
             if rawJSON != nil
             {
                 var users:[User] = []
@@ -128,7 +146,7 @@ class BluemixCommunication
             {
                 completion(users: [])
             }
-        }
+        }*/
     }
     
     /******************************************************************************************
@@ -140,7 +158,20 @@ class BluemixCommunication
         details = ["error": "", "success": false]
         let params = ["action": getUserAction, "userId": userId]
         
-        Alamofire.request(.GET, userURL, parameters: params).responseJSON { (_, response, rawJSON, _) -> Void in
+        Alamofire.request(.GET, userURL, parameters: params).responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                // let json = JSON(response)
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }/*
+            .responseJSON { (_, response, rawJSON) -> Void in
             var json = JSON(rawJSON!)
             if json.stringValue != self.getUserFailure //rawJSON!.string != self.getUserFailure
             {
@@ -157,7 +188,7 @@ class BluemixCommunication
             else
             {
                 completion(user: nil)
-            }
+        }*/
         }
     }
     
@@ -168,15 +199,28 @@ class BluemixCommunication
     {
         let params = ["action": updateCurrentSongAction, "userId": userId, "track": track, "album":album, "artist":artist, "uri":URI]
 
-        Alamofire.request(.POST, userURL, parameters: params).responseString { (_, response, string, _) -> Void in
-            if string! == "1020"
-            {
-                println("update song success")
+        Alamofire.request(.POST, userURL, parameters: params).responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                // let json = JSON(response)
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
             }
-            else if string! == "1021"
-            {
-                println("Update song failure")
-            }
+//            .responseString { (_, response, string, _) -> Void in
+//            if string! == "1020"
+//            {
+//                println("update song success")
+//            }
+//            else if string! == "1021"
+//            {
+//                println("Update song failure")
+//            }
         }
     }
     
@@ -187,8 +231,21 @@ class BluemixCommunication
     {
         let params = ["action": getCurrentSongAction, "userId": userId]
         
-        Alamofire.request(.GET, userURL, parameters: params).responseJSON { (_, response, rawJSON, _) -> Void in
-            if rawJSON?.string == self.getCurrentSongFailure
+        Alamofire.request(.GET, userURL, parameters: params).responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                // let json = JSON(response)
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+            //.responseJSON { (_, response, rawJSON, _) -> Void in
+            /*if rawJSON?.string == self.getCurrentSongFailure
             {
                 println("Get song failure")
                 completion(songInfo: nil)
@@ -202,7 +259,7 @@ class BluemixCommunication
                 let album = songJSON["album"].stringValue
                 let songInfo = ["song":song, "artist": artist, "album":album]
                 completion(songInfo: songInfo)
-            }
+            }*/
         }
     }
     
@@ -213,9 +270,24 @@ class BluemixCommunication
     {
         let params = ["action": newUserAction, "id": spotifyId, "name": name, "lat":lat, "lon":lon, "profilePictureUrl":profilePicture]
         
-        Alamofire.request(.POST, userURL, parameters: params).responseString { (_, response, rawString, _) -> Void in
+        Alamofire.request(.POST, userURL, parameters: params).responseJSON { request, response, result in
+            switch result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                completion()
+                // let json = JSON(response)
+                
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+
+            /*.responseString { (_, response, rawString, _) -> Void in
             println("CREATE USER \(rawString)")
-            completion()
+            completion()*/
         }
     }
     

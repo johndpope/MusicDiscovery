@@ -1,4 +1,5 @@
 import UIKit
+import GoogleMaps
 
 class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotificationProtocol, GMSMapViewDelegate {
     
@@ -10,7 +11,7 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     
     let calculator = MapCalculator()
     
-    var currentMapType: GMSMapViewType = kGMSTypeNormal
+    var currentMapType: GMSMapViewType = GoogleMaps.kGMSTypeNormal  // = GMSMapViewType.kGMSTypeNormal
     
     var mapTimer: NSTimer!
     var markerTimer: NSTimer!
@@ -105,12 +106,12 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     }
     
     func markerTimerDidFire() -> Void {
-        println("marker timer fired")
+        print("marker timer fired")
         
         if requestNearbyUsers() {
-            println("Retrieved users")
+            print("Retrieved users")
         } else {
-            println("failed to retrieve users")
+            print("failed to retrieve users")
         }
     }
     
@@ -125,15 +126,15 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
         
         if id != nil{
             BluemixCommunication().getNearbyUsers(id!, completion: { (users) -> Void in
-                println("users:")
-                println("\t\(users)")
+                print("users:")
+                print("\t\(users)")
                 if !users.isEmpty {
                     self.markUsersOnMap(users)
                 }
             })
             return true
         }
-        println("")
+        print("")
         return false
     }
     
@@ -154,8 +155,8 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
         }
         
         for index in 0..<usersArr.count {
-            var position = CLLocationCoordinate2DMake( usersArr[index].getLocation2D()["latitude"]!.doubleValue , usersArr[index].getLocation2D()["longitude"]!.doubleValue )
-            var userMarker = GMSMarker(position: position)
+            let position = CLLocationCoordinate2DMake( usersArr[index].getLocation2D()["latitude"]!.doubleValue , usersArr[index].getLocation2D()["longitude"]!.doubleValue )
+            let userMarker = GMSMarker(position: position)
 
             userMarker.userData = usersArr[index]
             userMarker.map = self.mapView
@@ -168,11 +169,11 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
 //    }
     
     func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
-        println("Custom InfoWindow function")
+        print("Custom InfoWindow function")
         
-        var infoWindow = NSBundle.mainBundle().loadNibNamed("GMSInfoWindow", owner: self, options: nil).first! as! GMSInfoWindowTemplate
+        let infoWindow = NSBundle.mainBundle().loadNibNamed("GMSInfoWindow", owner: self, options: nil).first! as! GMSInfoWindowTemplate
         
-        var user:User! = marker.userData as! User!
+        let user:User! = marker.userData as! User!
         
         if user != nil {
             infoWindow.profilePic = UIImageView(image: user.getProfilePicture() )
@@ -190,9 +191,9 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     
     func updateMapViewToCamera () -> Void {
         if locHandler.location2D != nil && locHandler.bearing != nil {
-            var updateBearing = locHandler.bearing.trueHeading
-            var location2D = locHandler.location2D
-            var mapZoom = self.mapView.camera.zoom
+            let updateBearing = locHandler.bearing.trueHeading
+            let location2D = locHandler.location2D
+            let mapZoom = self.mapView.camera.zoom
 
             mapView.camera = GMSCameraPosition(target: location2D, zoom: mapZoom, bearing: updateBearing, viewingAngle: 0)
 
@@ -203,7 +204,7 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     func updateMapViewToBearing () -> Void {
 
         if locHandler.bearing != nil {
-            var updateBearing = locHandler.bearing.trueHeading
+            let updateBearing = locHandler.bearing.trueHeading
             self.mapView.animateToBearing(updateBearing)
             drawCone()
         }
@@ -212,7 +213,7 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     func updateMapViewToLocation () -> Void {
         
         if locHandler.location2D != nil {
-            var updateLocation = locHandler.location2D
+            let updateLocation = locHandler.location2D
             self.mapView.animateToLocation(updateLocation)
             drawCone()
         }
@@ -226,7 +227,7 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
                 if locHandler.bearing != nil {
                     initBearing = locHandler.bearing.trueHeading
                 }
-                var mapInsets = UIEdgeInsetsMake(450.0, 0.0, 0.0, 0.0)
+                let mapInsets = UIEdgeInsetsMake(450.0, 0.0, 0.0, 0.0)
                 mapView.padding = mapInsets
                 
                 mapView.camera = GMSCameraPosition(target: locHandler.location2D, zoom: 15.5, bearing: initBearing, viewingAngle: 0)
@@ -243,9 +244,9 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     
     func drawCone() -> Void {
         
-        var points2D:[CLLocationCoordinate2D] = calculator.calculateForwardPoints()
+        let points2D:[CLLocationCoordinate2D] = calculator.calculateForwardPoints()
         
-        var conicPath = GMSMutablePath()
+        let conicPath = GMSMutablePath()
         for point in points2D {
             conicPath.addCoordinate(point)
         }
@@ -260,11 +261,11 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     
     //this is only a test function
     func drawLine () -> Void {
-        var path = GMSMutablePath()
+        let path = GMSMutablePath()
         path.addCoordinate(locHandler.location2D)
     //    path.addCoordinate(calculator.calculateForwardPoint())
         
-        var line = GMSPolyline(path: path)
+        let line = GMSPolyline(path: path)
         line.strokeColor = UIColor.blackColor()
         line.strokeWidth = 2
         line.map = self.mapView
@@ -273,14 +274,14 @@ class MapViewController: UIViewController, MapUpdateProtocol, MapLocationNotific
     //This is only a test function
     func drawPolygon () -> Void {
         // Create a rectangular path
-        var rect = GMSMutablePath()
+        let rect = GMSMutablePath()
         rect.addCoordinate(CLLocationCoordinate2DMake(37.36, -122.0))
         rect.addCoordinate(CLLocationCoordinate2DMake(37.45, -122.0))
         rect.addCoordinate(CLLocationCoordinate2DMake(37.45, -122.2))
         rect.addCoordinate(CLLocationCoordinate2DMake(37.36, -122.2))
         
         // Create the polygon, and assign it to the map.
-        var polygon = GMSPolygon(path: rect)
+        let polygon = GMSPolygon(path: rect)
         polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05)
         polygon.strokeColor = UIColor.blackColor()
         polygon.strokeWidth = 2
